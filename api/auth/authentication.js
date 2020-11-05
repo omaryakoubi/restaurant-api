@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const user = require("../../models/user.js");
+const routes_protector = require("./routes-protector.js");
 
 router.post("/register", async (req, res) => {
   try {
@@ -59,7 +61,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/signup", async (req, res, next) => {
+router.post("/signup", async (req, res) => {
   try {
     const { phone, password } = req.body;
     const userInfo = await user.findOne({ phone });
@@ -84,11 +86,11 @@ router.post("/signup", async (req, res, next) => {
   }
 });
 
-router.post("/logout", async (req, res) => {
+router.post("/logout", routes_protector, async (req, res) => {
   try {
     const { token } = req.body;
     const removeToken = "";
-    await user.findOneAndUpdate(token, { removeToken });
+    await user.findOneAndUpdate({ token }, { removeToken });
     res.status(200).send("user logged out");
   } catch (error) {
     res.status(500).send(error);
