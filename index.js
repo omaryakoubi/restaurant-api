@@ -13,9 +13,11 @@ app.use(cors());
 
 //API MIDDLEWARES
 const register = require("./api/auth/register.js");
+const signup = require("./api/auth/signup.js");
 const add_food = require("./api/product/add_food.js");
 const food_list = require("./api/product/food_list.js");
 app.use("/app", register);
+app.use("/app", signup);
 app.use("/app", add_food);
 app.use("/app", food_list);
 
