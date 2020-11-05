@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const bcrypt = require("bcrypt");
 const user = require("../models/user.js");
 
 router.post("login", async (req, res) => {
@@ -18,23 +19,26 @@ router.post("login", async (req, res) => {
 
     if (valid_email) {
       res.send("email already registred");
-    }
-
-    else if (valid_phone) {
+    } else if (valid_phone) {
       res.send("phone number already registred");
     } else {
-        const new_user = new user({
+      bcrypt.hash(password, 10, (err, hash) => {
+        if (err) {
+          console.log(err);
+        } else {
+          password = hash;
+          const new_user = new user({
             full_name,
             email,
             password,
             phone,
             restaurant_name,
             address,
-            zip_code
-        })
-        
+            zip_code,
+          }).save();
+        }
+      });
     }
-    
   } catch (error) {
     res.status(500).send(error);
   }
