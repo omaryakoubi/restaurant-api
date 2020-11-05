@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const user = require("../../models/user.js");
 const routes_protector = require("./routes-protector.js");
 
-router.post("/register", async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
     let {
       full_name,
@@ -62,7 +62,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/signup", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const { phone, password } = req.body;
     const userInfo = await user.findOne({ phone });
