@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   zip_code: {
-    type: String,
+    type: Number,
     required: true,
   },
 });
