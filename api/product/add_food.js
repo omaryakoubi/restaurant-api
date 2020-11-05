@@ -4,7 +4,7 @@ const food = require("../../models/food.js");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "assets/food-images");
+    cb(null, "assets");
   },
 
   filename: (req, file, cb) => {
@@ -14,15 +14,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post("add-food", upload.single("food_photo"), async (req, res) => {
+router.post("/add-food", upload.single("photo"), async (req, res) => {
   try {
     const { item_name, description } = req.body;
-    const { photo } = req.file.path;
     const new_food = await new food({
       item_name,
       description,
-      photo,
+      photo : req.file.path,
     }).save();
+    console.log("omar here")
     res.status(201).send(new_food);
   } catch (error) {
     res.status(500).send(error);
