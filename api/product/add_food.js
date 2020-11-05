@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const multer = require("multer");
 const food = require("../../models/food.js");
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "assets");

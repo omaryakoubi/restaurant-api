@@ -3,11 +3,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const user = require("../../models/user.js");
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", async (req, res, next) => {
   try {
     const { phone, password } = req.body;
     const userInfo = await user.findOne({ phone });
-
     if (userInfo) {
       bcrypt.compare(password, userInfo.password, async (err, result) => {
         if (err) {
@@ -26,6 +25,17 @@ router.post("/signup", async (req, res) => {
     }
   } catch (error) {
     res.status(500).send(error);
+  }
+});
+
+router.post("/logout", async (req, res) => {
+  try {
+    const { token } = req.body;
+    const removeToken = "";
+    await user.findOneAndUpdate(token, removeToken);
+    res.status(200).send("user logged out");
+  } catch (error) {
+    res.send(error);
   }
 });
 
