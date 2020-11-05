@@ -7,6 +7,6 @@ module.exports = async (req, res, next) => {
     req.userInfo = decoded;
     next();
   } catch (error) {
-    res.status(401).send("to continue you shold be logged in");
+    res.status(401).send("to continue you should be logged in");
   }
 };
