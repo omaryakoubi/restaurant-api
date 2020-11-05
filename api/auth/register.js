@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
-const user = require("../models/user.js");
+const user = require("../../models/user.js");
 
 router.post("login", async (req, res) => {
   try {
@@ -44,4 +44,4 @@ router.post("login", async (req, res) => {
   }
 });
 
-module.exports = module;
+module.exports = router;

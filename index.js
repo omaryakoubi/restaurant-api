@@ -12,7 +12,7 @@ app.use(morgan("combined"));
 app.use(cors());
 
 //API MIDDLEWARES
-const register = require("./api/register.js");
+const register = require("./api/auth/register.js");
 app.use("/app", register);
 
 //DATABASE CONNECTION
