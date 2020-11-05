@@ -19,10 +19,13 @@ router.post("register", async (req, res) => {
 
     if (valid_email) {
       res.send("email already registred");
-    } else if (valid_phone) {
+    }
+    
+    if (valid_phone) {
       res.send("phone number already registred");
-    } else {
-      bcrypt.hash(password, 10, (err, hash) => {
+    } 
+
+      await bcrypt.hash(password, 10, (err, hash) => {
         if (err) {
           console.log(err);
         } else {
@@ -36,11 +39,13 @@ router.post("register", async (req, res) => {
             address,
             zip_code,
           }).save();
+          res.status(201).send(new_user);
         }
       });
     }
-  } catch (error) {
+   catch (error) {
     res.status(500).send(error);
+    console.log(error)
   }
 });
 
