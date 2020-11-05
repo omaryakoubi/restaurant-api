@@ -5,7 +5,6 @@ const crypto = require("crypto");
 const user = require("../../models/user.js");
 require("dotenv").config;
 
-// # SEND EMAIL TO THE ADMIN EMAIL #
 router.post("/reset-password", async (req, res) => {
   try {
     const { email } = req.body;
@@ -18,7 +17,6 @@ router.post("/reset-password", async (req, res) => {
     }
 
     if (userInfo === null) {
-      console.error("email not found in the db");
       res.send("user not exist in the database");
     }
 
@@ -40,7 +38,7 @@ router.post("/reset-password", async (req, res) => {
       to: email,
       subject: "reset password",
       text: `to set your new password please
-             click here : http://localhost:4200/${resetPasswordToken}`,
+             click here : http://localhost:8080/${resetPasswordToken}`,
     };
 
     await transporter.sendMail(mailOptions);
@@ -50,7 +48,6 @@ router.post("/reset-password", async (req, res) => {
   }
 });
 
-// # RESET THE PASSWORD OF THE ADMIN #
 router.post("/reset-password/:token", async (req, res) => {
   try {
     const { password } = req.body;
@@ -68,14 +65,13 @@ router.post("/reset-password/:token", async (req, res) => {
       await user.save();
       res.send("token expired");
     }
-    
+
     userInfo.resetPasswordToken = "";
     userInfo.resetPasswordExpires = 0;
     userInfo.password = await bcrypt.hash(password, 10);
     await user.save();
     res.send("new password setted");
   } catch (error) {
-    console.log(error);
     res.send(error);
   }
 });
