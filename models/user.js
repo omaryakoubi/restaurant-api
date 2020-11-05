@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  restaurant_name {
+  restaurant_name: {
     type: String,
     required: true
   },
