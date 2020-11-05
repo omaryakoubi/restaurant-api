@@ -47,6 +47,8 @@ router.post("/register", async (req, res) => {
           restaurant_name,
           address,
           zip_code,
+          token: "",
+          resetPasswordToken: "",
         }).save();
         res.status(201).send(new_user);
       }

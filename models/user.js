@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   },
   restaurant_name: {
     type: String,
-    required: true
+    required: true,
   },
   address: {
     type: String,
@@ -29,6 +29,12 @@ const userSchema = new mongoose.Schema({
   zip_code: {
     type: Number,
     required: true,
+  },
+  token: {
+    type: String,
+  },
+  resetPasswordToken: {
+    type: String,
   },
 });
 

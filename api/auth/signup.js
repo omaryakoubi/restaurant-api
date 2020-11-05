@@ -9,15 +9,16 @@ router.post("/signup", async (req, res) => {
     const userInfo = await user.findOne({ phone });
 
     if (userInfo) {
-      bcrypt.compare(password, userInfo.password, (err, result) => {
+      bcrypt.compare(password, userInfo.password, async (err, result) => {
         if (err) {
           res.status(500).send("auth failed wrong");
         }
 
         if (result) {
-          const _id = userInfo._id
+          const _id = userInfo._id;
           const token = jwt.sign({ _id, phone }, process.env.JWT_KEY);
-          res.json(token);
+          await user.findOneAndUpdate(phone, { token });
+          res.send(token);
         }
       });
     } else {
@@ -28,4 +29,4 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-module.exports = router
+module.exports = router;
