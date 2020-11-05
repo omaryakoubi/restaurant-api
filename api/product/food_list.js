@@ -6,6 +6,7 @@ router.get("food-list", async (req, res) => {
     const food_list = await food.find({});
     res.send(food_list);
   } catch (error) {
+    console.log(error)
     res.status(500).send(error);
   }
 });

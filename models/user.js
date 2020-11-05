@@ -14,20 +14,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  passwordConfirmation: {
-    type: String,
-  },
   phone: {
     type: Number,
-    required: true,
-  },
-  address: {
-    type: String,
     required: true,
   },
   restaurant_name: {
     type: String,
     required: true
+  },
+  address: {
+    type: String,
+    required: true,
   },
   zip_code: {
     type: Number,
