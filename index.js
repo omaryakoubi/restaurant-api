@@ -11,8 +11,12 @@ app.use(bodyParser.json());
 app.use(morgan("combined"));
 app.use(cors());
 
-const DB_URL = process.env.MONGODB_URL;
+//API MIDDLEWARES
+const register = require("./api/register.js");
+app.use("/app", register);
 
+//DATABASE CONNECTION
+const DB_URL = process.env.MONGODB_URL;
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -23,8 +27,8 @@ mongoose.connection.once("open", () => {
   console.log("MongoDB connected");
 });
 
+//SERVER CONNECTION
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);
 });
