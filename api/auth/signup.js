@@ -6,15 +6,16 @@ const user = require("../../models/user.js");
 router.post("/signup", async (req, res) => {
   try {
     const { phone, password } = req.body;
-    const userInfo = user.findOne({ phone });
+    const userInfo = await user.findOne({ phone });
 
     if (userInfo) {
       bcrypt.compare(password, userInfo.password, (err, result) => {
         if (err) {
-          res.status.send("auth failed wrong");
+          res.status(500).send("auth failed wrong");
         }
 
         if (result) {
+          const _id = userInfo._id
           const token = jwt.sign({ _id, phone }, process.env.JWT_KEY);
           res.json(token);
         }
